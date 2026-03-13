@@ -6,6 +6,7 @@
     <title>工位檔產生器 (WEB版 - V29)</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
     <style>
         body { font-family: "Microsoft JhengHei", Arial, sans-serif; margin: 0; background: #f4f4f4; height: 100vh; display: flex; flex-direction: column; overflow: hidden; user-select: none; }
@@ -79,36 +80,20 @@
         }
     </style>
 
-    <script>
-        const ACCESS_PASSWORD = "3042"; 
-        const ADMIN_PASSWORD = "easonliu";
-        let hasAccess = false;
-        
-        window.onload = function() {
-            let pwd = prompt("請輸入系統存取密碼：", "");
-            if (pwd === ACCESS_PASSWORD) {
-                hasAccess = true;
-                initApp(); 
-            } else {
-                alert("密碼錯誤，系統將關閉！");
-                document.body.innerHTML = "<h2 style='text-align:center; margin-top:20%; color:red;'>無權限存取。</h2>";
-            }
-        };
-
-        document.addEventListener('contextmenu', function(e) {
-            let pwd = prompt("檢視功能需要管理員權限，請輸入密碼：", "");
-            if (pwd !== ADMIN_PASSWORD) e.preventDefault();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j')) || (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
-                let pwd = prompt("檢視原始碼需要管理員權限，請輸入密碼：", "");
-                if (pwd !== ADMIN_PASSWORD) e.preventDefault();
-            }
-        });
-    </script>
 </head>
 <body>
+
+<body>
+
+<div id="login-mask" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#2c3e50; z-index:100000; display:flex; justify-content:center; align-items:center; flex-direction:column; color:white;">
+    <div style="background:white; padding:40px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.3); text-align:center; color:#333;">
+        <h2 style="color:#005a9e; margin-top:0;">🔒 工位檔產生器</h2>
+        <p style="color:#666; font-size:14px; margin-bottom:20px;">此為機密工具，請輸入存取密碼以繼續</p>
+        <input type="password" id="sys-password" placeholder="請輸入密碼..." style="padding:10px; font-size:16px; border:1px solid #ccc; border-radius:4px; width:200px; text-align:center;" onkeypress="if(event.key==='Enter') unlockApp()">
+        <br><button class="btn btn-primary" style="margin-top:20px; width:200px; padding:10px; font-size:16px; background:#28a745; color:white; border:none; cursor:pointer; border-radius:4px;" onclick="unlockApp()">登入系統</button>
+        <div id="login-error" style="color:#dc3545; margin-top:15px; font-weight:bold; display:none;">❌ 密碼錯誤，請重新輸入！</div>
+    </div>
+</div>
 
 <div class="global-header">
     <div class="header-title">工位檔產生器 (WEB版 - V29)</div>
