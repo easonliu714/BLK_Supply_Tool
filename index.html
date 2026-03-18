@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>工位檔產生器 (WEB版 - V29)</title>
+    <title>工位檔產生器 (WEB版 - V30)</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -22,7 +22,7 @@
         .btn-sm { padding: 4px 8px; font-size: 12px; }
         
         .main-workspace { display: flex; flex: 1; height: 100%; overflow: hidden; width: 100vw; position: relative; }
-        .panel-left { flex: 0 0 400px; display: flex; flex-direction: column; background: #333; color: white; border-right: 1px solid #555; overflow-y: auto; z-index: 20; }
+        .panel-left { flex: 0 0 400px; display: flex; flex-direction: column; background: #333; color: white; border-right: 1px solid #555; overflow: auto; z-index: 20; }
         .panel-section { padding: 10px; border-bottom: 1px solid #555; }
         .panel-header { background: #444; padding: 5px 10px; font-weight: bold; margin: -10px -10px 10px -10px; border-bottom: 1px solid #555; display:flex; justify-content:space-between; align-items: center; }
         
@@ -96,7 +96,7 @@
 </div>
 
 <div class="global-header">
-    <div class="header-title">工位檔產生器 (WEB版 - V29)</div>
+    <div class="header-title">工位檔產生器 (WEB版 - V30)</div>
     <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFileImport(this)">
     <button onclick="document.getElementById('file-input').click()" id="btn-import">📂 匯入 MAP 檔</button>
     <button onclick="openPasteModal()" id="btn-paste" class="btn-orange">📋 貼上 MAP</button>
@@ -173,7 +173,7 @@
             </table>
         </div>
 
-        <div class="panel-section" style="flex:1; overflow:auto;">
+        <div class="panel-section">
             <div class="panel-header">
                 <span>機台補正表 (參考)</span>
                 <div>
@@ -181,7 +181,7 @@
                     <button id="mt-edit-btn" class="btn-purple btn-sm" onclick="toggleMachineEdit()">✏️ 編輯</button>
                 </div>
             </div>
-            <div style="overflow-x: auto;" id="machine-table-container"></div>
+            <div id="machine-table-container"></div>
         </div>
     </div>
 
